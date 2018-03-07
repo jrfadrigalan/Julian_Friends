@@ -1,0 +1,38 @@
+<?php
+
+	include("connect.php"); 	
+	
+	$link=Connection();
+
+	$result=mysql_query("SELECT * FROM `HTU21D` ORDER BY `TimeStamp`",$link);
+?>
+
+<html>
+   <head>
+      <title>Sensor Data</title>
+   </head>
+<body>
+   <h1>Temperature Sensor Readings</h1>
+	<!-- Creating the table-->
+   <table border="1" cellspacing="1" cellpadding="1">
+		<tr>
+			<td>&nbsp;Timestamp&nbsp;</td>
+			<td>&nbsp;Celsius&nbsp;</td>
+			<td>&nbsp;Fahrenheit&nbsp;</td>
+		</tr>
+
+      <?php 
+		//Fetching the Data
+		  if($result!==FALSE){
+		     while($row = mysql_fetch_array($result)) {
+		        printf("<tr><td> &nbsp;%s </td><td> &nbsp;%s&nbsp; </td><td> &nbsp;%s&nbsp; </td></tr>", 
+		           $row["TimeStamp"], $row["Celsius"], $row["Fahrenheit"]);
+		     }
+		     mysql_free_result($result);
+		     mysql_close();
+		  }
+      ?>
+
+   </table>
+</body>
+</html>
